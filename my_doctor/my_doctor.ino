@@ -43,6 +43,7 @@ void onBeatDetected()
 void setup()
 {
     Serial.begin(115200);
+     WiFi.begin(ssid, pass);   //WiFi connection
     oled.begin();
     oled.clearDisplay();
     oled.setTextSize(1);
@@ -56,6 +57,13 @@ void setup()
     Blynk.begin(auth, ssid, pass);
  
     Serial.print("Initializing Pulse Oximeter..");
+ 
+  while (WiFi.status() != WL_CONNECTED) {  //Wait for the WiFI connection completion
+ 
+    delay(500);
+    Serial.println("Waiting for connection");
+ 
+  }
  
     if (!pox.begin())
     {
